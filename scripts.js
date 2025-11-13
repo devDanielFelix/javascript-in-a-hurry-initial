@@ -10,8 +10,11 @@ document.querySelector("#close-nav-menu").addEventListener("click", function() {
 
 // Greeting Section
 
-const greetingText = "Good Morning";
-const weatherCondition = "Sunny";
-const usetLocation = "Calgary";
-let temperature = 22.875;
-let weatherText = "The weather is cloudy in London and it's 22°C outside.";
+const greetingText = "Good Night";
+const weatherCondition = "Winter";
+const userLocation = "Calgary";
+let temperature = 2.883;
+let weatherText = `The weather is ${weatherCondition} in ${userLocation} and it's ${temperature.toFixed()}°C outside.`; //toFixed() method to round the temperature.
+
+document.querySelector("#greeting").innerHTML = greetingText;
+document.querySelector("p#weather").innerHTML = weatherText;
