@@ -10,11 +10,17 @@ document.querySelector("#close-nav-menu").addEventListener("click", function() {
 
 // Greeting Section
 
+function celsiusToFahrenheit(temperature) {
+    let fahr = (temperature * 9/5) + 32; //calcular a conversão de celsiu para fahrenheit - fórmula: (C × 9/5) + 32 = F
+    return fahr;
+}
+
+
 const greetingText = "Good Night";
 const weatherCondition = "Winter";
-const userLocation = "Calgary";
-let temperature = 2.883;
-let weatherText = `The weather is ${weatherCondition} in ${userLocation} and it's ${temperature.toFixed()}°C outside.`; //toFixed() method to round the temperature.
+const userLocation = "Kelowna";
+let temperature = 1;
+let weatherText = `The weather is ${weatherCondition} in ${userLocation} and it's ${celsiusToFahrenheit(temperature).toFixed(1)}°F outside.`; //toFixed() method to round the temperature.
 
 document.querySelector("#greeting").innerHTML = greetingText;
 document.querySelector("p#weather").innerHTML = weatherText;
