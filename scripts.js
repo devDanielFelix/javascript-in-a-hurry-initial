@@ -241,6 +241,10 @@ function productsHandler() {
     });
 }
 
+function footerHandler() {
+    let newYear = new Date().getFullYear();
+    document.querySelector("footer").textContent = `© ${newYear} Javascript Flash Course. All rights reserved.`;
+}
 
 //Page Load Events
 
@@ -249,3 +253,4 @@ greetingHandler();
 clockHandler();
 galleryHandler();
 productsHandler();
+footerHandler();
