@@ -255,7 +255,9 @@ function weatherHandler() {
                     document.querySelector("p#weather").innerHTML = fahrenheitText;
                 }
             });
-        });
+        }).catch ((err => {
+            document.querySelector("p#weather").innerHTML = "Unable to get weather data. Try again later."; //Metodo catch para tratamento de erros.
+        }));
     });
 }
 
