@@ -1,3 +1,6 @@
+const weatherAPIKEY = "b3f1aac0eb0bc17e5e20ae12dca8ff78"
+const weatherAPIURL = 'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}&units=metric';
+
 const galleryImages = [
     {
         src: "./assets/gallery/image1.jpg",
@@ -13,7 +16,7 @@ const galleryImages = [
         src: "./assets/gallery/image3.jpg",
         alt: "Thumbnail Image 3"
     },
-];
+]
 
 const products = [
     {
@@ -52,7 +55,7 @@ const products = [
       price: 45,
       image: "./assets/products/img4.png"
     }
-  ]
+]
 
 
 function menuHandler() {
@@ -88,29 +91,7 @@ function greetingHandler() {
             greetingText = "Welcome";
         }
 
-
-    const weatherCondition = "Winter";
-    const userLocation = "Kelowna";
-    let temperature = 1; //temperature in Celsius
-
-
-    let celsiusText = `The weather is ${weatherCondition} in ${userLocation} and it's ${temperature.toFixed(1)}°C outside.`;
-    let fahrenheitText = `The weather is ${weatherCondition} in ${userLocation} and it's ${celsiusToFahrenheit(temperature).toFixed(1)}°F outside.`; //toFixed() method to round the temperature.
-
-
-
     document.querySelector("#greeting").innerHTML = greetingText;
-    document.querySelector("p#weather").innerHTML = celsiusText;
-
-
-    document.querySelector(".weather-group").addEventListener('click', function(e) {
-        if (e.target.id == "celsius") {
-            document.querySelector("p#weather").innerHTML = celsiusText;
-        } 
-        else if (e.target.id == "fahr") {
-            document.querySelector("p#weather").innerHTML = fahrenheitText;
-        }
-    });
 }
 
 function clockHandler() {
@@ -212,13 +193,9 @@ function productsHandler() {
 
    
 
-    let freeProducts = products.filter(function(item){
-        return !item.price || item.price <= 0;
-    });
+    let freeProducts = products.filter(item => !item.price || item.price <= 0); //arrow function
 
-    let paidProducts = products.filter(function(item){
-        return item.price > 0; 
-    });
+    let paidProducts = products.filter(item => item.price > 0); //arrow function
 
     populateProducts(products);
 
@@ -246,6 +223,42 @@ function footerHandler() {
     document.querySelector("footer").textContent = `© ${newYear} Javascript Flash Course. All rights reserved.`;
 }
 
+function weatherHandler() {
+        navigator.geolocation.getCurrentPosition(position => {
+        console.log(position);
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+        let url = weatherAPIURL
+        .replace("{lat}", latitude)
+        .replace("{lon}", longitude)
+        .replace("{API key}", weatherAPIKEY);
+
+        fetch(url)
+        .then(Response => Response.json())
+        .then(data => {
+        console.log(data);
+            const condition = data.weather[0].description;
+            const location = data.name;
+            let temperature = data.main.temp;
+
+            let celsiusText = `The weather is ${condition} in ${location} and it's ${temperature.toFixed(1)}°C outside.`;
+            let fahrenheitText = `The weather is ${condition} in ${location} and it's ${celsiusToFahrenheit(temperature).toFixed(1)}°F outside.`; //toFixed() method to round the temperature.
+
+            document.querySelector("p#weather").innerHTML = celsiusText;
+
+
+            document.querySelector(".weather-group").addEventListener('click', function(e) {
+                if (e.target.id == "celsius") {
+                    document.querySelector("p#weather").innerHTML = celsiusText;
+                } 
+                else if (e.target.id == "fahr") {
+                    document.querySelector("p#weather").innerHTML = fahrenheitText;
+                }
+            });
+        });
+    });
+}
+
 //Page Load Events
 
 menuHandler();
@@ -254,3 +267,4 @@ clockHandler();
 galleryHandler();
 productsHandler();
 footerHandler();
+weatherHandler();
